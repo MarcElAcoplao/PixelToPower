@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta content="Pixel to Power" property="og:title" />
+  <meta content="Grind your way through enemies to build the biggest factory" property="og:description" />
+  <meta content="img/icon.png" property="og:image" />
+  <meta content="#008888" data-react-helmet="true" name="theme-color" />
+  <meta name="color-scheme" content="light only">
+  <title>Test</title>
+  <link href="style.css?v2=1" rel="stylesheet" type="text/css" />
+  <link id="themeLink" href="themes/themeDark.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="img/icon.png">
+</head>
+
+<body>
+  <div id="topBar">
+    <div id="levelBar">
+      <p id="levelBarText"> <span id="level">Level 1</span></p>
+      <p id="levelBarRankText">(<span id="rank">beginner clicker</span>)</p>
+    </div>
+    <div id="XPBar">
+      <div id="XPBarBack"></div>
+      <p id="XPBarText">XP to next level: <span id="XPToNextlevel">0/0</span></p>
+    </div>
+  </div>
+
+<div id="mainContainer">
+  <div id="tabsContainer">
+    <p id="nextUnlockLevel">test</p>
+    <button class="button" id="genTab" onclick="tab(1)">Generadors</button>
+    <button class="button" id="milloresTab" onclick="tab(2)">Millores</button>
+    <button class="button" id="combatTab" onclick="tab(3)">Combat</button>
+  </div>
+
+  <div id="buttonsContainer">
+   <button class="button" id="gen1" onclick="comprarGenerador(1)">Generador 1</button>
+   <button class="button" id="gen2" onclick="comprarGenerador(2)">Generador 2</button>
+   <button class="button" id="gen3" onclick="comprarGenerador(3)">Generador 3</button>
+   <button class="button" id="gen4" onclick="comprarGenerador(4)">Generador 4</button>
+   <button class="button" id="gen5" onclick="comprarGenerador(5)">Generador 5</button>
+
+   <button class="button" id="millora1" onclick="comprarMillora(1)">Millora 1</button>
+   <button class="button" id="millora2" onclick="comprarMillora(2)">Millora 2</button>
+  </div>
+
+  <div id="infosContainer">
+    <p id="selectedPetText">Hola2</p>
+  </div>
+</div>
+  
+  <p id="versionText">Test v0.0</a></p>
+  <button class="settingsButton" style="bottom: 12.5vh" onclick="exportGame()">Export</button>
+  <button class="settingsButton" style="bottom: 10vh" onclick="importGame()">Import</button>
+  <button class="settingsButton" style="bottom: 7.5vh" onclick="save()">Manual save</button>
+  <button class="settingsButton" style="bottom: 5vh; background-color: #d99" onclick="hardReset()">Hard reset</button>
+
+  <script src="constants.js"></script>
+  <script src="script.js"></script>
+  <script defer>setAutoSave()</script>
+</body>
+
+</html>
