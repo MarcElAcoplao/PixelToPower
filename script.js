@@ -168,8 +168,10 @@ function tab(x) { //Determina la pantalla en la qual es troba el jugador
   game.pantalla = x
 }
 
-
-
+function nombreEntrades() {
+  for (i=0;i<millores.length;i++) {if (!game.millores[i]) game.millores[i] = 0}
+}
+nombreEntrades()
 
 function numberShort(x) { //He agafat aquesta part del codi del meu joc, determina l'exponent del nombre i el resumeix com "K (mil)", "M (milió)", "B (bilió)" o "notació científica (3.12e14)". Entra un nombre (38443) i retorna el text resumit (38.4k)
   if (typeof x === 'number' && !isNaN(x)) {
