@@ -5,8 +5,9 @@ function reset() {
     pantalla: 1,
     diners: 0,
     monedes: 1,
-    vida: 0,
-    mal: 0,
+    vida: 1,
+    mal: 1,
+    desbloqueig: 0,
     generadors: [0,0,0,0,0],
     efecteGeneradors: [1,2,3,4,5],
     produccioGeneradors: 0,
@@ -87,6 +88,11 @@ function changeTheme() {
   document.getElementById("themeLink").href = "themes/themeDark.css"
 }
 
+nombreEntrades()
+function nombreEntrades() {
+  for (i=0;i<millores.length;i++) {if (!game.milloresComprades[i]) {game.milloresComprades[i] = 0}}
+}
+
 function comprarGenerador(x) {
   if (game.monedes >= generadors[x].cost) {
     game.monedes -= generadors[x].cost
@@ -130,6 +136,15 @@ function textMillores() {
 }
 setInterval(textMillores, 50)
 
+function textEnemics() {
+  if (game.pantalla == 3)
+  for (i=1;i<enemics.length;i++) {
+  document.getElementById(enemics[i].id).style.display = "block"
+  }
+  else {for (i=1;i<enemics.length;i++) {document.getElementById(enemics[i].id).style.display = "none"}}
+}
+setInterval(textEnemics, 50)
+
 function milloraDisponible(x) {
   if (game.milloresComprades[x] == 1) {return false}
   else {
@@ -160,18 +175,42 @@ setInterval(generarDiners, 50)
 
 function textInfo() { //Actualitza el text dels diferents elements
   document.getElementById("nextUnlockLevel").innerHTML = "Hola a tothom"
-  document.getElementById("selectedPetText").innerHTML = "<img src='img/shop/23.png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/shop/0.png';\"><br>Diners: " + numberShort(game.diners) + "<br>Producció: " + numberShort(game.produccioGeneradors) + "/s"
+  document.getElementById("selectedPetText").innerHTML = "<img src='img/shop/23.png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/shop/0.png';\"><br>" + stats(game.desbloqueig)
 }
 setInterval(textInfo, 50)
 
-function tab(x) { //Determina la pantalla en la qual es troba el jugador
-  game.pantalla = x
+function stats(x) { //Retorna tots els possibles valors per als atributs
+  let result = ""
+  result += "Diners: " + numberShort(game.diners) + "<br>"
+  result += "Producció: " + numberShort(game.produccioGeneradors) + "/s<br>"
+  if (x >= 1) {
+    result += "Monedes: " + numberShort(game.monedes) + "<br>"
+    result += "Vida: " + numberShort(game.vida) + "<br>"
+    result += "Mal: " + numberShort(game.mal) + "<br>"
+  }
+
+  return result
 }
 
-function nombreEntrades() {
-  for (i=0;i<millores.length;i++) {if (!game.millores[i]) game.millores[i] = 0}
+function desbloqueig() { //Determina si certs elements han sigut desbloquejats
+  if (game.desbloqueig >= 1) {document.getElementById("combatTab").style.display = "block"} else {document.getElementById("combatTab").style.display = "none"}
 }
-nombreEntrades()
+setInterval(desbloqueig, 50)
+
+function efectesMillores() {
+  game.desbloqueig = 0 + Math.min(game.milloresComprades[1], 1)
+  game.vida = 1 * (game.milloresComprades[2] * 0.5 + 1) * (game.milloresComprades[3] * 1 + 1) * (game.milloresComprades[4] * 2 + 1) * (game.milloresComprades[5] * 4 + 1) * (game.milloresComprades[6] * 9 + 1)
+  game.mal = 1 * (game.milloresComprades[7] * 0.5 + 1) * (game.milloresComprades[8] * 1 + 1) * (game.milloresComprades[9] * 2 + 1) * (game.milloresComprades[10] * 4 + 1) * (game.milloresComprades[11] * 9 + 1) 
+}
+setInterval(efectesMillores, 50)
+
+function lluitar(x) {
+   let copsGuanyar = enemics[x].vida / game.mal 
+   let copsPerdre = game.vida / enemics[x].mal
+   if (copsGuanyar <= copsPerdre) game.monedes += enemics[x].recompensa
+}
+
+
 
 function numberShort(x) { //He agafat aquesta part del codi del meu joc, determina l'exponent del nombre i el resumeix com "K (mil)", "M (milió)", "B (bilió)" o "notació científica (3.12e14)". Entra un nombre (38443) i retorna el text resumit (38.4k)
   if (typeof x === 'number' && !isNaN(x)) {
@@ -188,3 +227,8 @@ else result = (x).toFixed(2)
 return result
   }
 }
+
+function tab(x) { //Determina la pantalla en la qual es troba el jugador
+  game.pantalla = x
+}
+

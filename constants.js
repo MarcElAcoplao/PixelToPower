@@ -22,3 +22,8 @@ const millores = [
   {nom: "millora10", cost: 20, nombreRequisits: 1, requisit: 9, efecte: "x5 Mal per 20 diners"},
   {nom: "millora11", cost: 20, nombreRequisits: 1, requisit: 10, efecte: "x10 Mal per 20 diners"},
 ]
+
+const enemics = [
+  {nom: "test", recompensa: 0, vida: 0.1, mal: 0.1, id: "test"},
+  {nom: "basic", recompensa: 1, vida: 1, mal: 1, id: "enemic1"},
+]
