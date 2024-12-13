@@ -13,6 +13,11 @@ function reset() {
     produccioGeneradors: 0,
     milloresComprades: [1,0,0,0,0,0],
     ultimaGeneracio: Date.now(),
+    enemic: 1,
+    potPujar: 1,
+    potBaixar: 0,
+    exp: 0,
+    nivell: 1,
   }
 }
 reset()
@@ -137,11 +142,20 @@ function textMillores() {
 setInterval(textMillores, 50)
 
 function textEnemics() {
-  if (game.pantalla == 3)
-  for (i=1;i<enemics.length;i++) {
-  document.getElementById(enemics[i].id).style.display = "block"
+  if (game.pantalla == 3) {
+  document.getElementById("enemic").style.display = "block"
+  document.getElementById("enemicAmunt").style.display = "block"
+  if (game.potPujar == 1) {document.getElementById("enemicAmunt").disabled = false} else {document.getElementById("enemicAmunt").disabled = true}
+  document.getElementById("enemicAvall").style.display = "block"
+  if (game.potBaixar == 1) {document.getElementById("enemicAvall").disabled = false} else {document.getElementById("enemicAvall").disabled = true}
+  document.getElementById("enemyImage").style.display = "block"
   }
-  else {for (i=1;i<enemics.length;i++) {document.getElementById(enemics[i].id).style.display = "none"}}
+  else {
+  document.getElementById("enemic").style.display = "none"
+  document.getElementById("enemicAmunt").style.display = "none"
+  document.getElementById("enemicAvall").style.display = "none"
+  document.getElementById("enemyImage").style.display = "none"
+  }
 }
 setInterval(textEnemics, 50)
 
@@ -152,6 +166,14 @@ function milloraDisponible(x) {
     if (millores[x].nombreRequisits == 1) {
     if (game.milloresComprades[millores[x].requisit] == 1) {return true}
     else return false
+    }
+    if (millores[x].nombreRequisits >= 2) {
+      let array = millores[x].requisits
+      console.log("Test 1")
+      for (a=0;a<millores[x].nombreRequisits;a++) {
+      if (game.milloresComprades[array[a]] == 0) return false
+    }
+    return true
   }
  }
 }
@@ -175,7 +197,8 @@ setInterval(generarDiners, 50)
 
 function textInfo() { //Actualitza el text dels diferents elements
   document.getElementById("nextUnlockLevel").innerHTML = "Hola a tothom"
-  document.getElementById("selectedPetText").innerHTML = "<img src='img/shop/23.png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/shop/0.png';\"><br>" + stats(game.desbloqueig)
+  document.getElementById("selectedPetText").innerHTML = "<img src='img/shop/23.png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/enemies/0.png';\"><br>" + stats(game.desbloqueig)
+  document.getElementById("enemyImage").innerHTML = "<img src='img/enemies/" + game.enemic + ".png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/enemies/0.png';\"><br>"
 }
 setInterval(textInfo, 50)
 
@@ -198,18 +221,46 @@ function desbloqueig() { //Determina si certs elements han sigut desbloquejats
 setInterval(desbloqueig, 50)
 
 function efectesMillores() {
-  game.desbloqueig = 0 + Math.min(game.milloresComprades[1], 1)
-  game.vida = 1 * (game.milloresComprades[2] * 0.5 + 1) * (game.milloresComprades[3] * 1 + 1) * (game.milloresComprades[4] * 2 + 1) * (game.milloresComprades[5] * 4 + 1) * (game.milloresComprades[6] * 9 + 1)
-  game.mal = 1 * (game.milloresComprades[7] * 0.5 + 1) * (game.milloresComprades[8] * 1 + 1) * (game.milloresComprades[9] * 2 + 1) * (game.milloresComprades[10] * 4 + 1) * (game.milloresComprades[11] * 9 + 1) 
+  game.desbloqueig = 0 + Math.min(game.milloresComprades[1], 1) + Math.min(game.milloresComprades[12], 1)
+  game.vida = 1 * (game.milloresComprades[2] * 0.25 + 1) * (game.milloresComprades[3] * 1 + 1) * (game.milloresComprades[4] * 3 + 1) * (game.milloresComprades[5] * 4 + 1) * (game.milloresComprades[6] * 9 + 1)
+  game.mal = 1 * (game.milloresComprades[7] * 0.25 + 1) * (game.milloresComprades[8] * 1 + 1) * (game.milloresComprades[9] * 3 + 1) * (game.milloresComprades[10] * 4 + 1) * (game.milloresComprades[11] * 9 + 1) 
 }
 setInterval(efectesMillores, 50)
 
 function lluitar(x) {
    let copsGuanyar = enemics[x].vida / game.mal 
    let copsPerdre = game.vida / enemics[x].mal
-   if (copsGuanyar <= copsPerdre) game.monedes += enemics[x].recompensa
+   if (copsGuanyar <= copsPerdre) {
+    game.monedes += enemics[x].recompensa
+    if (game.desbloqueig >= 2) game.exp += enemics[x].recompensa
+  }
 }
 
+function nivellEnemic(x) { //1 - Pujar, 2 - Baixar
+  if (x == 1 && game.potPujar == 1) {game.enemic += 1}
+  if (x == 2 && game.potBaixar == 1) {game.enemic -= 1}
+}
+
+function canviEnemic() {
+  if (game.enemic == 1) {game.potBaixar = 0} else {game.potBaixar = 1}
+  let max = 0
+  for (i=1;i<enemics.length;i++) {if (game.nivell >= enemics[i].nivell) max++}
+  if (game.enemic < max) {game.potPujar = 1} else {game.potPujar = 0}
+}
+setInterval(canviEnemic, 50)
+
+function XPToLevel(x) {return Math.floor((x / 5) ** 0.4) + 1}
+function levelToXP(x) {return Math.ceil((x-1) ** (1/0.4) * 5)}
+
+function nivells() {
+  game.nivell = XPToLevel(Math.max(Math.floor(game.exp), 0))
+  XPToNextLevel = levelToXP(game.nivell + 1) - levelToXP(game.nivell)
+  ProgressToNextLevel = game.exp - levelToXP(game.nivell)
+  document.getElementById("XPBarText").innerHTML = "EXP per pujar de nivell: " + numberShort(ProgressToNextLevel) + "/" + numberShort(XPToNextLevel)
+  document.getElementById("XPBarBack").style.width = (ProgressToNextLevel / XPToNextLevel * 100) + "%"
+  document.getElementById("level").innerHTML = "Nivell " + (game.nivell).toFixed(0)
+}
+setInterval(nivells, 50)
 
 
 function numberShort(x) { //He agafat aquesta part del codi del meu joc, determina l'exponent del nombre i el resumeix com "K (mil)", "M (milió)", "B (bilió)" o "notació científica (3.12e14)". Entra un nombre (38443) i retorna el text resumit (38.4k)
@@ -231,4 +282,3 @@ return result
 function tab(x) { //Determina la pantalla en la qual es troba el jugador
   game.pantalla = x
 }
-
