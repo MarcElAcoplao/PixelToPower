@@ -269,7 +269,7 @@ function generarDiners() { //S'activa 20 vegades per segon i determina la quanti
 setInterval(generarDiners, 50)
 
 function textInfo() { //Actualitza el text dels diferents elements
-  document.getElementById("nextUnlockLevel").innerHTML = "Hola a tothom"
+  document.getElementById("nextUnlockLevel").innerHTML = "Hola a tothom. En aquest joc, l'objectiu és adquirir generadors per comprar millores. Aquestes millores permeten combatre enemics cada vegada més complicats, per a poder comprar més generadors. Al cap d'una estona, responeu el formulari per ajudar-me amb el Treball de Recerca. Gràcies per jugar"
   document.getElementById("selectedPetText").innerHTML = "<img src='img/shop/23.png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/enemies/0.png';\"><br>" + stats(game.desbloqueig)
   document.getElementById("enemyImage").innerHTML = "<img src='img/enemies/" + enemics[game.enemic].imatge + ".png' style='width: 128px' onerror=\"this.onerror=null;this.src='img/enemies/0.png';\"><br>Vida: " + numberShort(game.vidaEnemic) + " / " + numberShort(enemics[game.enemic].vida) + "<br>Mal: " + numberShort(enemics[game.enemic].mal) + "<br>Recompensa: " + numberShort(enemics[game.enemic].recompensa)
 }
