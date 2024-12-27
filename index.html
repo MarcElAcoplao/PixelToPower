@@ -32,14 +32,15 @@
     <button class="button" id="genTab" onclick="tab(1)">Generadors</button>
     <button class="button" id="milloresTab" onclick="tab(2)">Millores</button>
     <button class="button" id="combatTab" style="display: none" onclick="tab(3)">Combat</button>
+    <button class="button" id="prestigiTab" style="display: none" onclick="tab(4)">Prestigi</button>
   </div>
 
   <div id="buttonsContainer">
-   <button class="button" id="gen1" onclick="comprarGenerador(1)">Generador 1</button>
-   <button class="button" id="gen2" onclick="comprarGenerador(2)">Generador 2</button>
-   <button class="button" id="gen3" onclick="comprarGenerador(3)">Generador 3</button>
-   <button class="button" id="gen4" onclick="comprarGenerador(4)">Generador 4</button>
-   <button class="button" id="gen5" onclick="comprarGenerador(5)">Generador 5</button>
+   <button class="button" id="gen1" style="display: none" onclick="comprarGenerador(1)">Generador 1</button>
+   <button class="button" id="gen2" style="display: none" onclick="comprarGenerador(2)">Generador 2</button>
+   <button class="button" id="gen3" style="display: none" onclick="comprarGenerador(3)">Generador 3</button>
+   <button class="button" id="gen4" style="display: none" onclick="comprarGenerador(4)">Generador 4</button>
+   <button class="button" id="gen5" style="display: none" onclick="comprarGenerador(5)">Generador 5</button>
 
    <button class="button" id="millora1" style="display: none" onclick="comprarMillora(1)">Millora 1</button>
    <button class="button" id="millora2" style="display: none" onclick="comprarMillora(2)">Millora 2</button>
@@ -59,10 +60,25 @@
    <button class="button" id="millora16" style="display: none" onclick="comprarMillora(16)">Millora 16</button>
    <button class="button" id="millora17" style="display: none" onclick="comprarMillora(17)">Millora 17</button>
    <button class="button" id="millora18" style="display: none" onclick="comprarMillora(18)">Millora 18</button>
+   <button class="button" id="millora19" style="display: none" onclick="comprarMillora(19)">Millora 19</button>
+   <button class="button" id="millora20" style="display: none" onclick="comprarMillora(20)">Millora 20</button>
+   <button class="button" id="millora21" style="display: none" onclick="comprarMillora(21)">Millora 21</button>
+   <button class="button" id="millora22" style="display: none" onclick="comprarMillora(22)">Millora 22</button>
+   <button class="button" id="millora23" style="display: none" onclick="comprarMillora(23)">Millora 23</button>
+   <button class="button" id="millora24" style="display: none" onclick="comprarMillora(24)">Millora 24</button>
+   <button class="button" id="millora25" style="display: none" onclick="comprarMillora(25)">Millora 25</button>
 
    <button class="button" id="enemic" style="display: none" onclick="lluitar(game.enemic)">Lluitar amb un enemic</button>
    <button class="button" id="enemicAmunt" style="display: none" onclick="nivellEnemic(1)">Pasar al següent enemic</button>
    <button class="button" id="enemicAvall" style="display: none" onclick="nivellEnemic(2)">Retrocedir a l'anterior enemic</button>
+
+   <button class="button" id="prestigi" style="display: none" onclick="prestigi(game.nivell)">Reinicia</button>
+   <button class="button" id="prestigi1" style="display: none" onclick="comprarMilloraPrestigi(1)">Millora de prestigi 1</button>
+   <button class="button" id="prestigi2" style="display: none" onclick="comprarMilloraPrestigi(2)">Millora de prestigi 2</button>
+   <button class="button" id="prestigi3" style="display: none" onclick="comprarMilloraPrestigi(3)">Millora de prestigi 3</button>
+   <button class="button" id="prestigi4" style="display: none" onclick="comprarMilloraPrestigi(4)">Millora de prestigi 4</button>
+   <button class="button" id="prestigi5" style="display: none" onclick="comprarMilloraPrestigi(5)">Millora de prestigi 5</button>
+   <button class="button" id="prestigi6" style="display: none" onclick="comprarMilloraPrestigi(6)">Millora de prestigi 6</button>
    <p id="enemyImage">Insert image here</p>
   </div>
 
@@ -71,7 +87,8 @@
   </div>
 </div>
   
-  <p id="versionText">Pixel to Power v0.0.0.1</a></p>
+  <p id="versionText">Pixel to Power v0.0.1<br>
+    Valoreu l'entreteniment en <a href="https://forms.gle/KBc2djYqKdMbZaC68" target="_blank">aquest formulari</a></a></p>
   <button class="settingsButton" style="bottom: 12.5vh" onclick="exportGame()">Export</button>
   <button class="settingsButton" style="bottom: 10vh" onclick="importGame()">Import</button>
   <button class="settingsButton" style="bottom: 7.5vh" onclick="save()">Manual save</button>
